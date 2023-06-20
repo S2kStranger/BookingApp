@@ -1,6 +1,15 @@
 var myform=document.getElementById('booking_form');
 myform.addEventListener('submit',add_data);
 
+axios.get("https://crudcrud.com/api/4d2fe7a4e6f741699d45f3cabf86c4f1/AppointmentApp")
+    .then((response) => {
+        for(var i=0;i<response.data.length;i++)
+        {
+            showOnScreen(response.data[i]);
+        }
+    })
+    .catch((err) => alert(err));
+
 function add_data(e)
 {
     e.preventDefault();
@@ -63,8 +72,11 @@ function showOnScreen(user_obj)
     btn.addEventListener('click',(e) =>
     {
         e.preventDefault();
+        axios.delete(`https://crudcrud.com/api/4d2fe7a4e6f741699d45f3cabf86c4f1/AppointmentApp/${user_obj._id}`)
+            .then((response) => alert("Successful"))
+            .catch((err) => alert(err))
         li.remove();
-        localStorage.removeItem(user_obj.email);
+        // localStorage.removeItem(user_obj.email);
     });
 
     //create edit button
