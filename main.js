@@ -10,16 +10,15 @@ axios.get("https://crudcrud.com/api/4d2fe7a4e6f741699d45f3cabf86c4f1/Appointment
     })
     .catch((err) => alert(err));
 
+    var nam=document.getElementById('name');
+    var  email=document.getElementById('email');
+    var phone_no=document.getElementById('phone_no');
+
 function add_data(e)
 {
     e.preventDefault();
-    var name=document.getElementById('name');
-    var  email=document.getElementById('email');
-    var phone_no=document.getElementById('phone_no');
-    
-
-    const user_obj=new newUser(name.value,email.value,phone_no.value);
-
+    console.log(e);
+    const user_obj=new newUser(nam.value,email.value,phone_no.value);
     axios.post("https://crudcrud.com/api/4d2fe7a4e6f741699d45f3cabf86c4f1/AppointmentApp",user_obj)
         .then((response) => {
             showOnScreen(response.data)
@@ -30,7 +29,7 @@ function add_data(e)
     // var obj_serialized=JSON.stringify(user_obj);
     // localStorage.setItem(user_obj.email,obj_serialized);
 
-    name.value='';
+    nam.value='';
     email.value='';
     phone_no.value='';
 
@@ -44,8 +43,20 @@ function add_data(e)
     };
     */
 
-    
+}
 
+//Function of update button
+function updateDetails(user_obj)
+{
+    var btnUpdate=document.getElementById("update");
+    btnUpdate.addEventListener('click',(e) => {
+    user_obj.name=nam.value;
+    user_obj.email=email.value;
+    user_obj.phone_no=phone_no.value;
+    axios.put(`https://crudcrud.com/api/4d2fe7a4e6f741699d45f3cabf86c4f1/AppointmentApp/${user_obj._id}`,user_obj)
+        .then((response) => showOnScreen(response.data))
+        .catch((err) => alert(err));
+})
 }
 
 
@@ -89,11 +100,11 @@ function showOnScreen(user_obj)
     {
         e.preventDefault();
         li.remove();
-        localStorage.removeItem(user_obj.email);
-        name.value=user_obj.name;
+        //localStorage.removeItem(user_obj.email);
+        nam.value=user_obj.name;
         email.value=user_obj.email;
         phone_no.value=user_obj.phone_no;
-
+        updateDetails(user_obj);
     });
 
 
