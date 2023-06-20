@@ -69,6 +69,8 @@ function showOnScreen(user_obj)
     var btn=document.createElement('button');
     btn.appendChild(document.createTextNode('Delete'));
     li.append(btn);
+
+    //added delete request
     btn.addEventListener('click',(e) =>
     {
         e.preventDefault();
